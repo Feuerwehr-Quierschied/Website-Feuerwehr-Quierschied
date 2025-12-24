@@ -61,14 +61,18 @@
 
                                 <div class="abteilungen-submenu hidden md:group-hover:block md:absolute md:left-full md:top-0 z-20 w-44 mt-0 md:ml-0">
                                     <ul class="bg-background-dropdown border-t-2 border-red-700 shadow-xl py-2 text-sm text-def-text">
-                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Jugend</a></li>
+                                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Jugendwehr</a></li>
                                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Aktiv</a></li>
                                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Ehrenabteilung</a></li>
                                     </ul>
                                 </div>
                             </li>
+                            <li>
+                                 <a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Fahrzeuge</a>
+                            </li>
                         </ul>
                     </div>
+
                 </li>
 
 
