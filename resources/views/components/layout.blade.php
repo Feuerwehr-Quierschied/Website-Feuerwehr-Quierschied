@@ -53,7 +53,7 @@
 
                             <li class="relative abteilungen-group">
                                 <button type="button" class="abteilungen-btn peer w-full text-left px-4 py-2 flex items-center justify-between hover:bg-gray-700 hover:text-fire-red">
-                                    Abteilungen
+                                    <a href="#">Abteilungen</a>
                                     <svg class="chevron w-3 h-3 ms-2 transition-transform duration-150 rotate-180 md:group-hover:rotate-0" fill="none" viewBox="0 0 10 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 3l3 3 3-3"/>
                                     </svg>
@@ -76,12 +76,6 @@
                 </li>
 
 
-
-
-                
-                <li>
-                    <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Fahrzeuge</a>
-                </li>
                 <li>
                     <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Aktuelles</a>
                 </li>
