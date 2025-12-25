@@ -68,7 +68,7 @@ class EinsatzForm
                     ->columnSpanFull(),
 
                 DateTimePicker::make('timestamp')
-                    ->label('Zeitstempel')
+                    ->label('Alarmzeit')
                     ->displayFormat('d.m.Y H:i')
                     ->seconds(false),
             ]);

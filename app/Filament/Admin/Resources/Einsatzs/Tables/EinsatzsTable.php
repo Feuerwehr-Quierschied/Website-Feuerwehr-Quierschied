@@ -30,7 +30,7 @@ class EinsatzsTable
                     ->sortable(),
 
                 TextColumn::make('timestamp')
-                    ->label('Zeitstempel')
+                    ->label('Alarmzeit')
                     ->dateTime('d.m.Y H:i')
                     ->sortable(),
 
