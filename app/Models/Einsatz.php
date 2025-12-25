@@ -14,6 +14,7 @@ class Einsatz extends Model
     protected $table = 'einsaetze';
 
     protected $fillable = [
+        'einsatznummer',
         'title',
         'slug',
         'description',
@@ -42,10 +43,4 @@ class Einsatz extends Model
         return $body;
     }
 
-    public function getEinsatznummerAttribute(): string
-    {
-        $year = $this->timestamp?->year ?? $this->created_at->year;
-
-        return "Einsatz {$this->id}/{$year}";
-    }
 }

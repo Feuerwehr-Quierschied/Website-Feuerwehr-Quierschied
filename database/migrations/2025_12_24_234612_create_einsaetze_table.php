@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('einsaetze', function (Blueprint $table) {
             $table->id();
+            $table->string('einsatznummer')->unique();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();

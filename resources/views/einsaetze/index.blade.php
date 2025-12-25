@@ -8,7 +8,7 @@
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                         <div class="flex-1">
                             <div class="mb-2">
-                                <span class="text-fire-red font-semibold">{{ $einsatz->einsatznummer }}</span>
+                                <span class="text-fire-red font-semibold">Einsatz {{ $einsatz->einsatznummer }}</span>
                             </div>
 
                             <h2 class="text-2xl font-semibold text-white mb-2">

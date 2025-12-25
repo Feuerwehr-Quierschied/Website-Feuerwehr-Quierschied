@@ -31,16 +31,10 @@ class EinsatzForm
                     }),
                 
                 TextInput::make('einsatznummer')
-                ->label('Einsatznummer')
-                ->readOnly()
-                ->dehydrated(false)
-                ->afterStateHydrated(function (TextInput $component, $record) {
-                    if ($record) {
-                        $component->state($record->einsatznummer);
-                    } else {
-                        $component->state('Wird nach dem Speichern generiert');
-                    }
-                }),
+                    ->label('Einsatznummer')
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()

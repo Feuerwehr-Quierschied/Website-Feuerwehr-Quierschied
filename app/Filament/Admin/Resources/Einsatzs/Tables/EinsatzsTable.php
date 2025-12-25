@@ -16,9 +16,8 @@ class EinsatzsTable
             ->columns([
                 TextColumn::make('einsatznummer')
                     ->label('Einsatznummer')
-                    ->sortable(query: function ($query, string $direction) {
-                        return $query->orderBy('id', $direction);
-                    }),
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('title')
                     ->label('Titel')
