@@ -16,8 +16,5 @@
         "prettier-plugin-blade": "^2.1.21",
         "tailwindcss": "^4.1.18",
         "vite": "^7.0.7"
-    },
-    "dependencies": {
-        "flowbite": "^4.0.1"
     }
 }

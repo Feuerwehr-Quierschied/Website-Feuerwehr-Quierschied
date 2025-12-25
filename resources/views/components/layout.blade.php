@@ -79,18 +79,8 @@
                 <li>
                     <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Aktuelles</a>
                 </li>
-                <li class="relative group dropdown-container"> <button type="button" class="dropdown-button flex items-center justify-between w-full py-2 px-3 text-def-text hover:text-white md:p-0">
-                        Einsätze
-                        <svg class="w-2.5 h-2.5 ms-2.5 transition-transform md:group-hover:rotate-180" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg>
-                    </button> 
-                    
-                    <div class="dropdown-menu hidden md:group-hover:block md:absolute left-0 z-10 w-full md:w-44 pt-2 md:pt-4"> 
-                        <ul class="bg-background-dropdown border-t-2 border-red-700 shadow-xl py-2 text-sm text-def-text">
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Fahrzeuge</a></li>
-                        </ul>
-                    </div>
+                <li>
+                    <a href="{{ route('einsaetze.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Einsätze</a>
                 </li>
                 <li>
                     <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Förderverein</a>

@@ -1,9 +1,11 @@
 <?php
-use App\Http\Controllers\ImageController;
-use Illuminate\Support\Facades\Route;
 
-Route::post('/upload-image', [ImageController::class, 'store'])->name('image.store');
+use App\Http\Controllers\EinsatzController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/einsaetze', [EinsatzController::class, 'index'])->name('einsaetze.index');
+Route::get('/einsaetze/{slug}', [EinsatzController::class, 'show'])->name('einsaetze.show');
