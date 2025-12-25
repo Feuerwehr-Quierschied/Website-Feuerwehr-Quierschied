@@ -51,10 +51,24 @@
                 </div>
             @endif
 
-            <div class="prose prose-invert prose-lg max-w-none">
-                <div class="text-def-text leading-relaxed">
-                    {!! $einsatz->rendered_body !!}
-                </div>
+            <div class="text-def-text leading-relaxed
+                [&_h1]:text-4xl [&_h1]:font-semibold [&_h1]:text-white [&_h1]:mt-8 [&_h1]:mb-4
+                [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-8 [&_h2]:mb-4
+                [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-8 [&_h3]:mb-4
+                [&_h4]:text-xl [&_h4]:font-semibold [&_h4]:text-white [&_h4]:mt-8 [&_h4]:mb-4
+                [&_h5]:text-lg [&_h5]:font-semibold [&_h5]:text-white [&_h5]:mt-8 [&_h5]:mb-4
+                [&_h6]:text-base [&_h6]:font-semibold [&_h6]:text-white [&_h6]:mt-8 [&_h6]:mb-4
+                [&_p]:mb-5
+                [&_ul]:mb-5 [&_ul]:pl-6
+                [&_ol]:mb-5 [&_ol]:pl-6
+                [&_li]:mt-2 [&_li]:mb-2
+                [&_strong]:text-white [&_strong]:font-semibold
+                [&_a]:text-fire-red [&_a]:underline [&_a:hover]:text-red-600
+                [&_blockquote]:border-l-4 [&_blockquote]:border-fire-red [&_blockquote]:pl-4 [&_blockquote]:my-6 [&_blockquote]:italic
+                [&_code]:bg-black/30 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+                [&_pre]:bg-black/30 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:my-6
+                [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:my-6">
+                {!! $einsatz->rendered_body !!}
             </div>
 
             @if($einsatz->im_einsatz_waren && count($einsatz->im_einsatz_waren) > 0)
@@ -69,93 +83,5 @@
             @endif
         </article>
     </div>
-
-    <style>
-        .prose {
-            color: #d1d5dc;
-        }
-
-        .prose h1,
-        .prose h2,
-        .prose h3,
-        .prose h4,
-        .prose h5,
-        .prose h6 {
-            color: #fff;
-            font-weight: 600;
-            margin-top: 2em;
-            margin-bottom: 1em;
-        }
-
-        .prose h1 {
-            font-size: 2.25em;
-        }
-
-        .prose h2 {
-            font-size: 1.875em;
-        }
-
-        .prose h3 {
-            font-size: 1.5em;
-        }
-
-        .prose p {
-            margin-bottom: 1.25em;
-        }
-
-        .prose ul,
-        .prose ol {
-            margin-bottom: 1.25em;
-            padding-left: 1.625em;
-        }
-
-        .prose li {
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-        }
-
-        .prose strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .prose a {
-            color: #FB2C36;
-            text-decoration: underline;
-        }
-
-        .prose a:hover {
-            color: #dc2626;
-        }
-
-        .prose blockquote {
-            border-left: 4px solid #FB2C36;
-            padding-left: 1em;
-            margin: 1.5em 0;
-            font-style: italic;
-        }
-
-        .prose code {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 0.2em 0.4em;
-            border-radius: 0.25em;
-            font-size: 0.875em;
-        }
-
-        .prose pre {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 1em;
-            border-radius: 0.5em;
-            overflow-x: auto;
-            margin: 1.5em 0;
-        }
-
-        .prose img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5em;
-            margin: 1.5em 0;
-        }
-    </style>
 </x-layout>
 
