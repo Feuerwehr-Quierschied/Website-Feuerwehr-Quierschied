@@ -2,6 +2,54 @@
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold text-fire-red mb-8">Einsätze</h1>
 
+        <form method="GET" action="{{ route('einsaetze.index') }}" class="mb-8 bg-background-dropdown p-6 rounded-lg shadow-lg">
+            <div class="flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-1 md:flex-none">
+                    <label for="year" class="block text-sm font-medium text-def-text mb-2">Jahr</label>
+                    <select name="year" id="year" class="w-full md:w-32 px-4 py-2 bg-background-dark border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-fire-red">
+                        <option value="">Alle Jahre</option>
+                        @for($y = date('Y'); $y >= 2020; $y--)
+                            <option value="{{ $y }}" {{ $selectedYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endfor
+                    </select>
+                </div>
+
+                <div class="flex-1 md:flex-none">
+                    <label for="month" class="block text-sm font-medium text-def-text mb-2">Monat</label>
+                    <select name="month" id="month" class="w-full md:w-40 px-4 py-2 bg-background-dark border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-fire-red">
+                        <option value="">Alle Monate</option>
+                        @foreach([
+                            1 => 'Januar',
+                            2 => 'Februar',
+                            3 => 'März',
+                            4 => 'April',
+                            5 => 'Mai',
+                            6 => 'Juni',
+                            7 => 'Juli',
+                            8 => 'August',
+                            9 => 'September',
+                            10 => 'Oktober',
+                            11 => 'November',
+                            12 => 'Dezember'
+                        ] as $num => $name)
+                            <option value="{{ $num }}" {{ $selectedMonth == $num ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="submit" class="px-6 py-2 bg-fire-red text-white rounded-lg hover:bg-red-600 transition-colors font-medium">
+                        Filtern
+                    </button>
+                    @if($selectedYear || $selectedMonth)
+                        <a href="{{ route('einsaetze.index') }}" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium">
+                            Zurücksetzen
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </form>
+
         <div class="space-y-6">
             @forelse($einsaetze as $einsatz)
                 <article class="bg-background-dropdown border-l-4 border-fire-red p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">

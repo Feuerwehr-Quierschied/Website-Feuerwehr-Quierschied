@@ -32,7 +32,8 @@ class EinsatzsTable
                 TextColumn::make('timestamp')
                     ->label('Alarmzeit')
                     ->dateTime('d.m.Y H:i')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
                     ->label('Erstellt am')

@@ -17,10 +17,17 @@ class EinsatzFactory extends Factory
     public function definition(): array
     {
         $title = fake()->sentence(4);
+        $year = fake()->year();
+        $number = fake()->numberBetween(1, 999);
+        $einsatznummer = "{$number}/{$year}";
+
+        // Generate slug: {part1}-{part2}-{title-slug}
+        $slug = "{$number}-{$year}-".\Illuminate\Support\Str::slug($title);
 
         return [
+            'einsatznummer' => $einsatznummer,
             'title' => $title,
-            'slug' => \Illuminate\Support\Str::slug($title),
+            'slug' => $slug,
             'description' => fake()->optional()->paragraph(),
             'body' => fake()->paragraphs(3, true),
             'timestamp' => fake()->dateTimeBetween('-1 year', 'now'),
