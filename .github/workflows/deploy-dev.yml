@@ -45,7 +45,7 @@ jobs:
             # Determine branch to deploy
             BRANCH=${DEPLOY_BRANCH}
             if [ -z "$BRANCH" ]; then
-              BRANCH="develop"
+              BRANCH="dev"
             fi
             
             # Pull latest code
