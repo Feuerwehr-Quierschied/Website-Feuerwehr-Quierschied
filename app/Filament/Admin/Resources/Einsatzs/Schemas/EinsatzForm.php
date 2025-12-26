@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Einsatzs\Schemas;
 
 use App\Models\Einsatz;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -50,8 +51,6 @@ class EinsatzForm
                         }
                     }),
 
-
-
                 TextInput::make('slug')
                     ->label('Slug')
                     ->required()
@@ -68,6 +67,22 @@ class EinsatzForm
                 RichEditor::make('body')
                     ->label('Inhalt')
                     ->required()
+                    ->columnSpanFull(),
+
+                FileUpload::make('image')
+                    ->label('Bild')
+                    ->image()
+                    ->disk('public')
+                    ->directory('einsaetze')
+                    ->maxSize(5120)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3',
+                        '1:1',
+                    ])
+                    ->visibility('public')
                     ->columnSpanFull(),
 
                 TagsInput::make('im_einsatz_waren')

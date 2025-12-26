@@ -77,7 +77,7 @@
 
 
                 <li>
-                    <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Aktuelles</a>
+                    <a href="{{ route('aktuelles.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Aktuelles</a>
                 </li>
                 <li>
                     <a href="{{ route('einsaetze.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Einsätze</a>

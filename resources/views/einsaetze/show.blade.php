@@ -8,8 +8,17 @@
             Zurück zur Einsatzübersicht
         </a>
 
-        <article class="bg-background-dropdown rounded-lg shadow-lg p-8">
-            <header class="mb-6 pb-6 border-b-2 border-gray-700">
+        <article class="bg-background-dropdown rounded-lg shadow-lg overflow-hidden">
+            @if($einsatz->image_url)
+                <div class="w-full h-64 md:h-96 overflow-hidden">
+                    <img src="{{ $einsatz->image_url }}" 
+                         alt="{{ $einsatz->title }}"
+                         class="w-full h-full object-cover">
+                </div>
+            @endif
+
+            <div class="p-8">
+                <header class="mb-6 pb-6 border-b-2 border-gray-700">
                 <h1 class="text-4xl font-bold text-white mb-4">{{ $einsatz->title }}</h1>
 
                 <div class="flex flex-wrap gap-4 text-sm text-gray-400">
@@ -43,7 +52,7 @@
                         </span>
                     @endif
                 </div>
-            </header>
+                </header>
 
             @if($einsatz->description)
                 <div class="mb-6 p-4 bg-gray-800 rounded-lg border-l-4 border-fire-red">
@@ -81,6 +90,7 @@
                     </ul>
                 </div>
             @endif
+            </div>
         </article>
     </div>
 </x-layout>

@@ -7,30 +7,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Einsatz extends Model
+class Aktuelles extends Model
 {
-    /** @use HasFactory<\Database\Factories\EinsatzFactory> */
+    /** @use HasFactory<\Database\Factories\AktuellesFactory> */
     use HasFactory;
 
-    protected $table = 'einsaetze';
-
     protected $fillable = [
-        'einsatznummer',
         'title',
         'slug',
         'description',
         'body',
         'image',
         'image_extension',
-        'timestamp',
-        'im_einsatz_waren',
+        'published_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'timestamp' => 'datetime',
-            'im_einsatz_waren' => 'array',
+            'published_at' => 'datetime',
         ];
     }
 
@@ -38,18 +33,18 @@ class Einsatz extends Model
     {
         parent::boot();
 
-        static::saving(function (Einsatz $einsatz) {
-            if ($einsatz->isDirty('image')) {
-                if ($einsatz->image) {
-                    $path = $einsatz->image;
-                    // Extract filename from path (e.g., "einsaetze/abc123.jpg" -> "abc123.jpg")
+        static::saving(function (Aktuelles $aktuelles) {
+            if ($aktuelles->isDirty('image')) {
+                if ($aktuelles->image) {
+                    $path = $aktuelles->image;
+                    // Extract filename from path (e.g., "aktuelles/abc123.jpg" -> "abc123.jpg")
                     $filename = basename($path);
                     $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
                     // Store the extension separately for reference
-                    $einsatz->image_extension = $extension;
+                    $aktuelles->image_extension = $extension;
                 } else {
-                    $einsatz->image_extension = null;
+                    $aktuelles->image_extension = null;
                 }
             }
         });
@@ -73,7 +68,7 @@ class Einsatz extends Model
             return null;
         }
 
-        // The image is stored as "einsaetze/filename.jpg" by Filament
+        // The image is stored as "aktuelles/filename.jpg" by Filament
         return Storage::disk('public')->url($this->attributes['image']);
     }
 }
