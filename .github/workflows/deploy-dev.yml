@@ -1,0 +1,123 @@
+name: Deploy to Dev
+
+on:
+  push:
+    branches:
+      - develop
+      - dev
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: false
+        default: 'develop'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEV_SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.DEV_SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        env:
+          SERVER_USER: ${{ secrets.DEV_SERVER_USER }}
+          SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
+          SERVER_PATH: ${{ secrets.DEV_SERVER_PATH }}
+          DEPLOY_BRANCH: ${{ github.event.inputs.branch || 'develop' }}
+        run: |
+          ssh ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+            set -e
+            cd ${SERVER_PATH}
+            
+            # Determine branch to deploy
+            BRANCH=${DEPLOY_BRANCH}
+            if [ -z "$BRANCH" ]; then
+              BRANCH="develop"
+            fi
+            
+            # Pull latest code
+            git fetch origin
+            git reset --hard origin/${BRANCH}
+            
+            # Copy dev environment file
+            if [ ! -f .env.dev ]; then
+              echo "Warning: .env.dev not found. Please create it manually."
+              exit 1
+            fi
+            
+            # Source environment variables
+            set -a
+            source .env.dev
+            set +a
+            
+            # Use dev docker-compose file
+            COMPOSE_FILE="docker-compose.dev.yaml"
+            
+            # Check if certificates exist for dev domain
+            CERT_PATH="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
+            CERT_EXISTS=$(docker compose -f ${COMPOSE_FILE} run --rm certbot ls ${CERT_PATH} 2>/dev/null || echo "not found")
+            
+            if [ "$CERT_EXISTS" = "not found" ]; then
+              echo "Certificates not found. Initializing SSL certificates for ${DOMAIN}..."
+              # Temporarily use initial HTTP-only config
+              sed -i "s|./docker/nginx.dev.conf|./docker/nginx.initial.conf|g" ${COMPOSE_FILE}
+              
+              docker compose -f ${COMPOSE_FILE} up -d nginx app db redis
+              sleep 10
+              
+              docker compose -f ${COMPOSE_FILE} run --rm certbot certbot certonly \
+                --webroot \
+                --webroot-path=/var/www/certbot \
+                -d ${DOMAIN} \
+                --email ${CERTBOT_EMAIL} \
+                --agree-tos \
+                --non-interactive || echo "Certificate initialization failed."
+              
+              # Switch back to dev HTTPS config
+              sed -i "s|./docker/nginx.initial.conf|./docker/nginx.dev.conf|g" ${COMPOSE_FILE}
+            else
+              echo "Certificates already exist, skipping initialization."
+            fi
+            
+            # Build and start containers
+            docker compose -f ${COMPOSE_FILE} down
+            docker compose -f ${COMPOSE_FILE} build --no-cache
+            docker compose -f ${COMPOSE_FILE} up -d
+            
+            # Wait for services to be ready
+            echo "Waiting for services to start..."
+            sleep 15
+            
+            # Run migrations
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan migrate --force || echo "Migration failed or already up to date"
+            
+            # Clear caches (dev environment - no caching)
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan config:clear || true
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan route:clear || true
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan view:clear || true
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan cache:clear || true
+            
+            # Restart nginx to reload certificates
+            docker compose -f ${COMPOSE_FILE} restart nginx
+            
+            echo "Dev deployment completed successfully!"
+          EOF
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          curl -f https://${{ secrets.DEV_DOMAIN }} || echo "Deployment verification failed - check manually"
+

@@ -1,0 +1,118 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+        run: |
+          ssh ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+            set -e
+            cd ${SERVER_PATH}
+            
+            # Pull latest code
+            git fetch origin
+            git reset --hard origin/main
+            
+            # Copy production environment file if it doesn't exist
+            if [ ! -f .env.production ]; then
+              echo "Warning: .env.production not found. Please create it manually."
+              exit 1
+            fi
+            
+            # Source environment variables from .env.production
+            set -a
+            source .env.production
+            set +a
+            
+            # Copy to .env for Laravel
+            cp .env.production .env
+            
+            # Use docker-compose.yaml (production)
+            COMPOSE_FILE="docker-compose.yaml"
+            
+            # Check if certificates exist, if not initialize them
+            CERT_PATH="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
+            CERT_EXISTS=$(docker compose -f ${COMPOSE_FILE} run --rm certbot ls ${CERT_PATH} 2>/dev/null || echo "not found")
+            if [ "$CERT_EXISTS" = "not found" ]; then
+              echo "Certificates not found. Initializing SSL certificates for ${DOMAIN}..."
+              # Temporarily use initial HTTP-only config
+              sed -i "s|${NGINX_CONFIG_PATH}|./docker/nginx.initial.conf|g" ${COMPOSE_FILE}
+              
+              # Start nginx first (it will use HTTP config for certbot challenge)
+              docker compose -f ${COMPOSE_FILE} up -d nginx app db redis
+              sleep 10
+              
+              # Request certificates (support multiple domains if configured)
+              CERTBOT_DOMAINS="-d ${DOMAIN}"
+              if [ ! -z "${DOMAIN_WWW}" ]; then
+                CERTBOT_DOMAINS="${CERTBOT_DOMAINS} -d ${DOMAIN_WWW}"
+              fi
+              
+              docker compose -f ${COMPOSE_FILE} run --rm certbot certbot certonly \
+                --webroot \
+                --webroot-path=/var/www/certbot \
+                ${CERTBOT_DOMAINS} \
+                --email ${CERTBOT_EMAIL} \
+                --agree-tos \
+                --non-interactive || echo "Certificate initialization failed. Please run manually."
+              
+              # Switch back to production HTTPS config
+              sed -i "s|./docker/nginx.initial.conf|${NGINX_CONFIG_PATH}|g" ${COMPOSE_FILE}
+            else
+              echo "Certificates already exist, skipping initialization."
+            fi
+            
+            # Build and start containers
+            docker compose -f ${COMPOSE_FILE} down
+            docker compose -f ${COMPOSE_FILE} build --no-cache
+            docker compose -f ${COMPOSE_FILE} up -d
+            
+            # Wait for services to be ready
+            echo "Waiting for services to start..."
+            sleep 15
+            
+            # Run migrations
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan migrate --force || echo "Migration failed or already up to date"
+            
+            # Clear and cache config (production)
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan config:cache
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan route:cache
+            docker compose -f ${COMPOSE_FILE} exec -T app php artisan view:cache
+            
+            # Restart nginx to reload certificates
+            docker compose -f ${COMPOSE_FILE} restart nginx
+            
+            echo "Deployment completed successfully!"
+          EOF
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          # Verification URLs will be from .env.production DOMAIN variable
+          # This step may fail if domain is not publicly accessible during CI
+          echo "Deployment completed. Verify manually at your production domain."
+

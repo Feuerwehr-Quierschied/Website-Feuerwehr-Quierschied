@@ -49,3 +49,7 @@ Homestead.yaml
 
 # Project specific
 boost.json
+
+DEPLOYMENT_SUMMARY.md
+GITHUB_SECRETS.md
+PRODUCTION_SETUP.md
