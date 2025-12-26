@@ -20,11 +20,34 @@ jobs:
         run: |
           ssh-keyscan -H ${{ secrets.DEV_SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Pull latest commit
+      - name: Deploy to server
         env:
           SERVER_USER: ${{ secrets.DEV_SERVER_USER }}
           SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
           SERVER_PATH: ${{ secrets.DEV_SERVER_PATH }}
         run: |
-          ssh ${SERVER_USER}@${SERVER_HOST} "cd ${SERVER_PATH} && git fetch origin && git pull origin dev"
+          ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+            set -e
+            cd ${SERVER_PATH}
+            
+            # Pull latest code
+            git fetch origin
+            git pull origin dev
+            
+            # Build and start Docker containers
+            docker compose -f docker-compose.dev.yaml build
+            docker compose -f docker-compose.dev.yaml up -d
+            
+            # Wait for services to be ready
+            echo "Waiting for services to start..."
+            sleep 10
+            
+            # Run migrations
+            docker compose -f docker-compose.dev.yaml exec -T app php artisan migrate --force
+            
+            # Create storage link (idempotent - safe to run multiple times)
+            docker compose -f docker-compose.dev.yaml exec -T app php artisan storage:link || true
+            
+            echo "Deployment completed successfully!"
+          EOF
 
