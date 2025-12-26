@@ -38,7 +38,7 @@ jobs:
           SERVER_PATH: ${{ secrets.DEV_SERVER_PATH }}
           DEPLOY_BRANCH: ${{ github.event.inputs.branch || 'develop' }}
         run: |
-          ssh ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+          ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
             pwd
