@@ -42,7 +42,7 @@ jobs:
 
             # Build and start Docker containers
             
-            docker compose build
+            docker compose build 
             
             docker compose down -v
             
