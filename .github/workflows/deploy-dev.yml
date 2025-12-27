@@ -41,8 +41,8 @@ jobs:
 
             # Build and start Docker containers
             docker compose build
-            docker compose down &&docker compose up -d
-            
+            docker compose down && docker compose up -d
+            docker compose exec app composer install
             # Wait for services to be ready
             echo "Waiting for services to start..."
             sleep 10

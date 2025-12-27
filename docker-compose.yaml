@@ -43,6 +43,6 @@ volumes:
 
 
 networks:
-  laravel_dev_environment:
+  laravel_local_environment:
   nginx_network:
     external: true
