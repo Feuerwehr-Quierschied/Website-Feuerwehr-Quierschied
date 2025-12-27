@@ -49,9 +49,9 @@ jobs:
             
             
 
-            docker compose exec app php artisan key:generate
+            docker compose exec -T app php artisan key:generate 2>&1
             # Create storage link (idempotent - safe to run multiple times)
-            docker compose exec -T app php artisan storage:link || true
+            docker compose exec -T app php artisan storage:link || true 2>&1
 
             docker compose exec app php artisan filament:install --panels
             docker compose exec app php artisan make:filament-user \
