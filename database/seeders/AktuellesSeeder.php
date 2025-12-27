@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Aktuelles;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use Database\Seeders\EinsatzSeeder;
-use Database\Seeders\AktuellesSeeder;
 
 class AktuellesSeeder extends Seeder
 {
