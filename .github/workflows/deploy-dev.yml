@@ -62,8 +62,8 @@ jobs:
             docker compose exec app php artisan filament:assets
             echo "Deployment completed successfully!"
           EOF
-          - name: Run Migrations
-          run: |
+      - name: Run Migrations
+        run: |
             ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
