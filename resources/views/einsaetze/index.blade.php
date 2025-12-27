@@ -49,7 +49,7 @@
                 </div>
             </div>
         </form>
-
+        @if($einsaetze->isNotEmpty())                    
         <div class="w-full overflow-x-auto border border-gray-200 rounded-lg">
             <table class="bg-background-dropdown min-w-full text-def-text table-auto">
             <thead>
@@ -64,6 +64,7 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
+            @endif
             @forelse($einsaetze as $einsatz)
              
                 <tr>
@@ -74,65 +75,6 @@
                     
                 </tr>
              
-<!--                 <article class="bg-background-dropdown border-l-4 border-fire-red p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                    <div class="flex flex-col md:flex-row gap-6">
-                        {{-- @if($einsatz->image_url)
-                            <div class="md:w-1/3 flex-shrink-0">
-                                <a href="{{ route('einsaetze.show', $einsatz->slug) }}">
-                                    <img src="{{ $einsatz->image_url }}" 
-                                         alt="{{ $einsatz->title }}"
-                                         class="w-full h-48 object-cover rounded-lg hover:opacity-90 transition-opacity">
-                                </a>
-                            </div>
-                        @endif --}}
-
-                        <div class="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                            <div class="flex-1">
-                                <div class="mb-2">
-                                    <span class="text-fire-red font-semibold">Einsatz {{ $einsatz->einsatznummer }}</span>
-                                </div>
-
-                                <h2 class="text-2xl font-semibold text-white mb-2">
-                                    <a href="{{ route('einsaetze.show', $einsatz->slug) }}" 
-                                       class="hover:text-fire-red transition-colors">
-                                        {{ $einsatz->title }}
-                                    </a>
-                                </h2>
-
-                                @if($einsatz->description)
-                                    <p class="text-def-text mb-4 line-clamp-2">
-                                        {{ $einsatz->description }}
-                                    </p>
-                                @endif
-
-                                <div class="flex flex-wrap gap-4 text-sm text-gray-400">
-                                    @if($einsatz->timestamp)
-                                        <span class="flex items-center gap-1">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            {{ $einsatz->timestamp->format('d.m.Y H:i') }}
-                                        </span>
-                                    @endif
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Erstellt: {{ $einsatz->created_at->format('d.m.Y') }}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <a href="{{ route('einsaetze.show', $einsatz->slug) }}" 
-                               class="inline-flex items-center px-4 py-2 bg-fire-red text-white rounded-lg hover:bg-red-600 transition-colors self-start">
-                                Mehr lesen
-                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </article> -->
             @empty
                 <div class="bg-background-dropdown border-l-4 border-gray-500 p-8 rounded-lg text-center">
                     <p class="text-def-text text-lg">Keine Einsätze gefunden.</p>
