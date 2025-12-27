@@ -41,9 +41,9 @@ jobs:
 
             # Build and start Docker containers
             docker compose build
+            docker compose exec app-dev sh -c "rm -rf /var/www/html/* /var/www/html/.* 2>/dev/null"
             docker compose down -v
-            docker volume rm dev_laravel_app_data
-            docker volume create dev_laravel_app_data
+            
             docker compose up -d
             docker compose exec app composer install
             # Wait for services to be ready
