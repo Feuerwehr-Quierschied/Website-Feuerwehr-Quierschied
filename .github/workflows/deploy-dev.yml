@@ -41,7 +41,7 @@ jobs:
 
             # Build and start Docker containers
             docker compose build
-            docker compose exec app-dev sh -c "rm -rf /var/www/html/* /var/www/html/.* 2>/dev/null"
+            docker compose exec app sh -c "rm -rf /var/www/html/* /var/www/html/.* 2>/dev/null"
             docker compose down -v
             
             docker compose up -d
