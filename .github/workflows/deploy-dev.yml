@@ -24,29 +24,31 @@ jobs:
         env:
           SERVER_USER: ${{ secrets.DEV_SERVER_USER }}
           SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
-          SERVER_PATH: ${{ secrets.DEV_SERVER_PATH }}
+          SERVER_PATH: /var/www/${{ github.ref_name }}
         run: |
           ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
-            
+            cp ${SEED_FILES}/public/images/* storage/app/public/images/
+
             # Pull latest code
-            git fetch origin
-            git pull origin dev
+            git fetch origin --all
+            git reset --hard origin/${{ github.ref_name }}
+            git pull origin ${{ github.ref_name }}
             
             # Build and start Docker containers
-            docker compose -f docker-compose.dev.yaml build
-            docker compose -f docker-compose.dev.yaml up -d
+            docker compose build
+            docker compose up -d
             
             # Wait for services to be ready
             echo "Waiting for services to start..."
             sleep 10
             
             # Run migrations
-            docker compose -f docker-compose.dev.yaml exec -T app php artisan migrate --force
+            docker compose exec -T laravel_app-${{ github.ref_name }} php artisan migrate --force
             
             # Create storage link (idempotent - safe to run multiple times)
-            docker compose -f docker-compose.dev.yaml exec -T app php artisan storage:link || true
+            docker compose exec -T laravel_app-${{ github.ref_name }} php artisan storage:link || true
             
             echo "Deployment completed successfully!"
           EOF
