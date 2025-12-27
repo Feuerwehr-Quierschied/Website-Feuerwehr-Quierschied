@@ -30,28 +30,38 @@ jobs:
           ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
-            cp ${SEED_FILES}/public/images/* storage/app/public/images/
+            
 
             # Pull latest code
             git fetch origin --all
             git reset --hard origin/${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
-            
+
+            cp ${SEED_FILES}/public/images/* storage/app/public/images/
+
             # Build and start Docker containers
             docker compose build
-            docker network inspect laravel_${{ github.ref_name }}_environment >/dev/null 2>&1 || \ docker network create laravel_${{ github.ref_name }}_environment
-            docker compose up -d
+            docker compose down &&docker compose up -d
             
             # Wait for services to be ready
             echo "Waiting for services to start..."
             sleep 10
             
             # Run migrations
-            docker compose exec -T laravel_app-${{ github.ref_name }} php artisan migrate --force
+            docker compose exec -T app php artisan migrate:fresh --seed --force
             
+
+            docker compose exec app php artisan key:generate
             # Create storage link (idempotent - safe to run multiple times)
-            docker compose exec -T laravel_app-${{ github.ref_name }} php artisan storage:link || true
-            
+            docker compose exec -T app php artisan storage:link || true
+
+            docker compose exec app php artisan filament:install --panels
+            docker compose exec app php artisan make:filament-user \
+            --name="${{secrets.FILAMENT_ADMIN_NAME}}" \
+            --email="${{secrets.FILAMENT_ADMIN_EMAIL}}" \
+            --password="${{secrets.FILAMENT_ADMIN_PASSWORD}}"
+
+            docker compose exec app php artisan filament:assets
             echo "Deployment completed successfully!"
           EOF
 
