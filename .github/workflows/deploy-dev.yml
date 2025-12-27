@@ -64,7 +64,8 @@ jobs:
           EOF
       - name: Run Migrations
         run: |
-            ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+          ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
             docker compose exec -T app php artisan migrate --seed --force 2>&1
+          EOF
