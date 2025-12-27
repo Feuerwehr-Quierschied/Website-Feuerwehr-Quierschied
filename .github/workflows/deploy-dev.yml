@@ -47,8 +47,6 @@ jobs:
             echo "Waiting for services to start..."
             sleep 10
             
-            # Run migrations
-            docker compose exec -T app php artisan migrate:fresh --seed --force
             
 
             docker compose exec app php artisan key:generate
@@ -64,4 +62,9 @@ jobs:
             docker compose exec app php artisan filament:assets
             echo "Deployment completed successfully!"
           EOF
-
+          - name: Run Migrations
+          run: |
+            ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+            set -e
+            cd ${SERVER_PATH}
+            docker compose exec -T app php artisan migrate --seed --force 2>&1
