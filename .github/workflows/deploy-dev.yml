@@ -41,7 +41,10 @@ jobs:
 
             # Build and start Docker containers
             docker compose build
-            docker compose down && docker compose up -d
+            docker compose down -v
+            docker volume rm dev_laravel_app_data
+            docker volume create dev_laravel_app_data
+            docker compose up -d
             docker compose exec app composer install
             # Wait for services to be ready
             echo "Waiting for services to start..."
