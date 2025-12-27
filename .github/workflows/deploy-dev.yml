@@ -33,6 +33,7 @@ jobs:
             
 
             # Pull latest code
+            docker compose exec app sh -c "rm -rf /var/www/html/* /var/www/html/.* 2>/dev/null"
             git fetch --all
             git reset --hard origin/${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
@@ -40,8 +41,9 @@ jobs:
             cp ${SEED_FILES}/public/images/* storage/app/public/images/
 
             # Build and start Docker containers
+            
             docker compose build
-            docker compose exec app sh -c "rm -rf /var/www/html/* /var/www/html/.* 2>/dev/null"
+            
             docker compose down -v
             
             docker compose up -d
