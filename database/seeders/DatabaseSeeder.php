@@ -25,5 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EinsatzSeeder::class,
         ]);
+        $this->call([
+            AktuellesSeeder::class,
+        ]);
     }
 }
