@@ -1,100 +1,65 @@
 services:
-  # PHP App
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_CONTAINER_NAME:-laravel_app}
+    container_name: laravel_app-${APP_ENV}
     restart: always
     volumes:
-      - .:/var/www
+      - laravel_app_data-${APP_ENV}:/var/www
     networks:
-      - ${NETWORK_NAME:-laravel_network}
-    environment:
-      - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=${DB_PORT:-5432}
-      - REDIS_HOST=${REDIS_HOST:-redis}
-      - REDIS_PORT=${REDIS_PORT:-6379}
-    depends_on:
-      - db
-      - redis
+      - laravel_${APP_ENV}_environment
 
-  # Nginx Web Server
   nginx:
     image: nginx:alpine
-    container_name: ${NGINX_CONTAINER_NAME:-laravel_nginx}
+    container_name: laravel_nginx-prod
     restart: always
     ports:
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
+      - "80:80"
+      - "443:443"
     volumes:
-      - .:/var/www
-      - ${NGINX_CONFIG_PATH:-./docker/nginx.production.conf}:/etc/nginx/conf.d/default.conf
-      - ${CERTBOT_WWW_VOLUME:-certbot-www}:/var/www/certbot
-      - ${CERTBOT_CERTS_VOLUME:-certbot-certs}:/etc/letsencrypt
+      - laravel_app_data-${APP_ENV}:/var/www:ro
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - certbot_www:/var/www/certbot
+      - certbot_certs:/etc/letsencrypt:ro
     depends_on:
       - app
-      - certbot
     networks:
-      - ${NETWORK_NAME:-laravel_network}
+      - laravel_dev_environment
+      - laravel_prod_environment
 
-  # Certbot for SSL certificates
-  certbot:
-    image: certbot/certbot:latest
-    container_name: ${CERTBOT_CONTAINER_NAME:-laravel_certbot}
-    restart: unless-stopped
-    volumes:
-      - ${CERTBOT_WWW_VOLUME:-certbot-www}:/var/www/certbot
-      - ${CERTBOT_CERTS_VOLUME:-certbot-certs}:/etc/letsencrypt
-    command: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot --webroot-path=/var/www/certbot; sleep 12h & wait $${!}; done;'"
-    networks:
-      - ${NETWORK_NAME:-laravel_network}
-
-  # Redis
   redis:
     image: redis:7-alpine
-    container_name: ${REDIS_CONTAINER_NAME:-laravel_redis}
+    container_name: laravel_redis-${APP_ENV}
     restart: always
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
     volumes:
-      - ${REDIS_VOLUME:-redis_data}:/data
+      - redis_data:/data
     networks:
-      - ${NETWORK_NAME:-laravel_network}
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - laravel_${APP_ENV}_environment
 
-  # PostgreSQL Database
   db:
     image: postgres:15-alpine
-    container_name: ${DB_CONTAINER_NAME:-laravel_db}
+    container_name: laravel_db-${APP_ENV}
     restart: always
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "${DB_PORT:-5432}:5432"
     volumes:
-      - ${DB_VOLUME:-pg_data}:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     networks:
-      - ${NETWORK_NAME:-laravel_network}
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-networks:
-  ${NETWORK_NAME:-laravel_network}:
-    driver: bridge
+      - laravel_${APP_ENV}_environment
 
 volumes:
-  ${DB_VOLUME:-pg_data}:
-  ${REDIS_VOLUME:-redis_data}:
-  ${CERTBOT_WWW_VOLUME:-certbot-www}:
-  ${CERTBOT_CERTS_VOLUME:-certbot-certs}:
+  laravel_app_data:
+  pg_data:
+  redis_data:
+  certbot_www:
+  certbot_certs:
+
+networks:
+  laravel_dev_environment:
+    external: true
+#  laravel_prod_environment:
+#    external: true

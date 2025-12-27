@@ -36,8 +36,20 @@ COPY --from=asset-builder /app/public/build ./public/build
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+
+
+# Copy app to a staging location for entrypoint
+RUN mkdir -p storage/framework/cache/data \
+             storage/framework/sessions \
+             storage/framework/views \
+             storage/app/public/images \
+             storage/app/public/einsaetze \
+             storage/app/public/aktuelles \
+             storage/logs \
+             bootstrap/cache
 # Set permissions for Laravel
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
+    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 9000
 CMD ["php-fpm"]
