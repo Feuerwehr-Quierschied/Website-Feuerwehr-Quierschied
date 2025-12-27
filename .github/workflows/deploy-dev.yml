@@ -63,6 +63,10 @@ jobs:
             echo "Deployment completed successfully!"
           EOF
       - name: Run Migrations
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PATH: /var/www/${{ github.ref_name }}
         run: |
           ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
