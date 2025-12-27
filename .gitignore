@@ -53,3 +53,4 @@ boost.json
 DEPLOYMENT_SUMMARY.md
 GITHUB_SECRETS.md
 PRODUCTION_SETUP.md
+docker-compose-local.yaml
