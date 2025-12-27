@@ -36,7 +36,7 @@ jobs:
             git fetch --all
             git reset --hard origin/${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
-
+            mkdir -p storage/app/public/images
             cp ${SEED_FILES}/public/images/* storage/app/public/images/
 
             # Build and start Docker containers
