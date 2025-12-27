@@ -71,5 +71,5 @@ jobs:
           ssh ${SERVER_USER}@${SERVER_HOST} << EOF
             set -e
             cd ${SERVER_PATH}
-            docker compose exec -T app php artisan migrate --seed --force 2>&1
+            docker compose exec -T app php artisan migrate:fresh --seed --force 2>&1
           EOF
