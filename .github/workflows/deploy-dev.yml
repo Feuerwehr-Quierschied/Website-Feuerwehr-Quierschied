@@ -33,7 +33,7 @@ jobs:
             
 
             # Pull latest code
-            git fetch origin --all
+            git fetch --all
             git reset --hard origin/${{ github.ref_name }}
             git pull origin ${{ github.ref_name }}
 
