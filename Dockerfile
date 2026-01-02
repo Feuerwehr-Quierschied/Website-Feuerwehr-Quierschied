@@ -34,7 +34,7 @@ COPY . .
 COPY --from=asset-builder /app/public/build ./public/build
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 
 

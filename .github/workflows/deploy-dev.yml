@@ -47,7 +47,8 @@ jobs:
             docker compose down -v
 
             docker compose up -d
-            docker compose exec app composer install
+            sleet 10
+            docker compose exec app composer install --optimize-autoloader
             # Wait for services to be ready
             echo "Waiting for services to start..."
             sleep 10
