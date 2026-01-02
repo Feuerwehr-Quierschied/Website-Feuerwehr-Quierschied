@@ -34,7 +34,7 @@
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0">
                 <li>
-                    <a href="/" class="block py-2 px-3 text-fire-red hover:text-red-600  rounded md:bg-transparent  md:p-0 active" aria-current="page">Home</a>
+                    <a href="/" class="block py-2 px-3 text-fire-red hover:text-red-900  rounded md:bg-transparent  md:p-0 active" aria-current="page">Home</a>
                 </li>
 
                 <li class="relative group dropdown-container">
