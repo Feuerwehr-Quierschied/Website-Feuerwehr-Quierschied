@@ -45,19 +45,13 @@ jobs:
             docker compose build 
             
             docker compose down -v
-            
+
             docker compose up -d
             docker compose exec app composer install
             # Wait for services to be ready
             echo "Waiting for services to start..."
             sleep 10
-            
-            
-
-            docker compose exec -T app php artisan key:generate 2>&1
-
-
-            docker compose exec -T app php artisan filament:install --panels
+          
             docker compose exec app php artisan make:filament-user \
             --name="${{secrets.FILAMENT_ADMIN_NAME}}" \
             --email="${{secrets.FILAMENT_ADMIN_EMAIL}}" \
