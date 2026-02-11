@@ -1,30 +1,20 @@
 <x-layout>
 
-<style>
-.widgets-row{display:flex;align-items:stretch;justify-content:center;gap:1rem;margin:1.5rem 0;}
-.widget{flex:1;min-width:0;display:flex}
-.widget-center{flex:2;display:flex;justify-content:center;align-items:center}
-.widget-center img{width:100%;max-width:100%;height:auto;display:block}
-@media (max-width:640px){.widgets-row{flex-direction:column}.widget-center{width:80%; margin-left: auto; margin-right: auto;}}
-</style>
-
-
-
-<div class="widgets-row">
-    <div class="widget widget-left !hidden md:!flex">
+<div class="flex items-stretch justify-center gap-4 my-6 max-sm:flex-col">
+    <div class="flex-1 min-w-0 flex !hidden md:!flex">
         <x-aktuelles-widget />
     </div>
 
-    <div class="widget widget-center border-4 border-red-700 flex flex-col items-center">
-        <img src="{{ Storage::url('images/image.png') }}" alt="Titelfoto">
+    <div class="flex-[2] flex flex-col justify-center items-center border-4 border-red-700 max-sm:w-4/5 max-sm:mx-auto">
+        <img src="{{ Storage::url('images/image.png') }}" alt="Titelfoto" class="w-full max-w-full h-auto block">
         {{-- Mobile-only tabbed widget: Einsätze / Aktuelles below the image --}}
-        
+
     </div>
     <div class="md:hidden">
         <x-mobile-widgets-tabbed />
     </div>
-    
-    <div class="widget widget-right !hidden md:!flex">
+
+    <div class="flex-1 min-w-0 flex !hidden md:!flex">
         <x-einsaetze-widget />
     </div>
 </div>
