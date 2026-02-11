@@ -11,15 +11,20 @@
 
 
 <div class="widgets-row">
-    <div class="widget widget-left hidden">
+    <div class="widget widget-left !hidden md:!flex">
         <x-aktuelles-widget />
     </div>
 
-    <div class="widget widget-center border-4 border-red-700">
+    <div class="widget widget-center border-4 border-red-700 flex flex-col items-center">
         <img src="{{ Storage::url('images/image.png') }}" alt="Titelfoto">
+        {{-- Mobile-only tabbed widget: Einsätze / Aktuelles below the image --}}
+        
+    </div>
+    <div class="md:hidden">
+        <x-mobile-widgets-tabbed />
     </div>
     
-    <div class="widget widget-right hidden md:block">
+    <div class="widget widget-right !hidden md:!flex">
         <x-einsaetze-widget />
     </div>
 </div>
