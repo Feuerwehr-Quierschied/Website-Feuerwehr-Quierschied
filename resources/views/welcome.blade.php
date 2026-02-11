@@ -1,13 +1,12 @@
 <x-layout>
 
-<div class="flex items-stretch justify-center gap-4 my-6 max-sm:flex-col">
+<div class="flex items-stretch justify-center gap-4 md:py-6 max-sm:flex-col">
     <div class="flex-1 min-w-0 flex !hidden md:!flex">
         <x-aktuelles-widget />
     </div>
 
-    <div class="flex-[2] flex flex-col justify-center items-center border-4 border-red-700 max-sm:w-4/5 max-sm:mx-auto">
+    <div class="flex-2 flex flex-col justify-center items-center border-b-4 md:border-4 border-red-700  max-sm:mx-auto">
         <img src="{{ Storage::url('images/image.png') }}" alt="Titelfoto" class="w-full max-w-full h-auto block">
-        {{-- Mobile-only tabbed widget: Einsätze / Aktuelles below the image --}}
 
     </div>
     <div class="md:hidden">
