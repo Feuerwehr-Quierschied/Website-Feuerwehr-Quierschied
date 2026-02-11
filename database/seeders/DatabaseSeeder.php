@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\EinsatzSeeder;
-use Database\Seeders\AktuellesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,11 +22,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $this->call([ 
+        $this->call([
             EinsatzSeeder::class,
         ]);
         $this->call([
             AktuellesSeeder::class,
+        ]);
+        $this->call([
+            WelcomeIntroSeeder::class,
         ]);
     }
 }
