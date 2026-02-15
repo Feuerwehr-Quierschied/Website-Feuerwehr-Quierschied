@@ -52,7 +52,6 @@ services:
       - "traefik.http.routers.nginx.entrypoints=websecure"
       - "traefik.http.routers.nginx.tls.certresolver=myresolver"
 volumes:
-  laravel_app_data:
   pg_data:
   redis_data:
   public_assets:
