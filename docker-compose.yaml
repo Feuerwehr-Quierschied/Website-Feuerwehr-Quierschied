@@ -6,7 +6,9 @@ services:
     container_name: laravel_app-${APP_ENV}
     restart: always
     volumes:
-      - laravel_app_data:/var/www
+      - storage_data:/var/www/storage
+      - bootstrap_cache:/var/www/bootstrap/cache
+      - public_assets:/var/www/public
     networks:
       - proxy
 
@@ -39,7 +41,8 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - laravel_app_data:/var/www:ro
+      - public_assets:/var/www/public:ro   # Hier liegt der Link ('storage')
+      - storage_data:/var/www/storage:ro
       - /var/www/certbot/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - proxy
@@ -52,6 +55,8 @@ volumes:
   laravel_app_data:
   pg_data:
   redis_data:
+  public_assets:
+  storage_data:
 
 
 networks:
