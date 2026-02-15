@@ -68,7 +68,7 @@
             @forelse($einsaetze as $einsatz)
              
                 <tr>
-                    <td class="px-6 py-3 border-b text-left text-xs font-medium text-def-text uppercase tracking-wider">{{ $einsatz->title }}</td>
+                    <td class="px-6 py-3 border-b text-left text-xs font-medium divide text-def-text uppercase tracking-wider">{{ $einsatz->title }}</td>
                     <td class="px-6 py-3 border-b text-left text-xs font-medium text-def-text uppercase tracking-wider">{{ $einsatz->einsatznummer }}</td>
                     <td class="px-6 py-3 border-b text-left text-xs font-medium text-def-text uppercase tracking-wider">{{ $einsatz->timestamp->format('d.m.Y H:i') }}</td>
                     <td class="px-6 py-3 border-b text-left text-xs font-medium text-def-text uppercase tracking-wider"><a href="{{ route('einsaetze.show', $einsatz->slug) }}" class="text-fire-red hover:text-red-600 transition-colors">Mehr lesen</a></td>

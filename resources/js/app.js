@@ -1,5 +1,5 @@
 import "./bootstrap";
-
+import "./backgroundloop";
 document.addEventListener('DOMContentLoaded', function () {
     // 1. Hauptmenü Toggle (Hamburger)
     const menuButton = document.getElementById('navbar-mv-button');

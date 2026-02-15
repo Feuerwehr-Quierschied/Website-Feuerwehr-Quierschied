@@ -1,6 +1,6 @@
 <x-layout>
 
-<div class="flex items-stretch justify-center gap-4 md:py-6 max-sm:flex-col">
+<div class="flex items-stretch justify-center gap-4 md:py-6 max-sm:flex-col ">
     <div class="flex-1 min-w-0 flex !hidden md:!flex">
         <x-aktuelles-widget />
     </div>

@@ -39,7 +39,7 @@
 
                 <li class="relative group dropdown-container">
                     <div class="flex items-center justify-between text-def-text hover:text-white w-full md:inline-flex md:justify-start">
-                        <a href="#" class="dropdown-link block py-2 px-3  md:p-0 md:inline-flex md:items-center">Über uns</a>
+                        <a href="{{ route('about_us.ueber_uns') }}" class="dropdown-link block py-2 px-3  md:p-0 md:inline-flex md:items-center">Über uns</a>
                         <button type="button" class="dropdown-chevron p-2  md:hidden">
                             <svg class="w-2.5 h-2.5 transition-transform" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -105,7 +105,7 @@
 </nav>
     </header>
 
-    <main class="grow">
+    <main class="grow bg-amber-50">
         {{$slot}}
     </main>
 
