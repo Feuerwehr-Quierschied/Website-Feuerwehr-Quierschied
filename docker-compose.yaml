@@ -57,6 +57,7 @@ volumes:
   redis_data:
   public_assets:
   storage_data:
+  bootstrap_cache:
 
 
 networks:
