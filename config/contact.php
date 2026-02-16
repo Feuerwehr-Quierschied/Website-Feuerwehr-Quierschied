@@ -25,6 +25,10 @@ return [
             'label' => 'Löschbezirksführer Fischbach',
             'email' => env('CONTACT_LOESCHBEZIRKSFUEHRER_FISCHBACH_EMAIL', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
         ],
+        'gemeindejugendwart' => [
+            'label' => 'Gemeindejugendwart',
+            'email' => env('CONTACT_GEMEINDEJUGENDWART_EMAIL', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+        ],
     ],
 
 ];
