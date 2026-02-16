@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\EinsatzController;
+use App\Http\Controllers\KontaktController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
 Route::get('/', function () {
     return view('welcome', [
@@ -13,6 +15,9 @@ Route::get('/einsaetze', [EinsatzController::class, 'index'])->name('einsaetze.i
 Route::get('/einsaetze/{slug}', [EinsatzController::class, 'show'])->name('einsaetze.show');
 
 Route::get('/ueber-uns', fn () => view('about_us.ueber_uns'))->name('about_us.ueber_uns');
+
+Route::get('/kontakt', [KontaktController::class, 'index'])->name('kontakt.index');
+Route::post('/kontakt', [KontaktController::class, 'store'])->middleware(ProtectAgainstSpam::class)->name('kontakt.store');
 
 Route::get('/aktuelles', [\App\Http\Controllers\AktuellesController::class, 'index'])->name('aktuelles.index');
 Route::get('/aktuelles/{slug}', [\App\Http\Controllers\AktuellesController::class, 'show'])->name('aktuelles.show');

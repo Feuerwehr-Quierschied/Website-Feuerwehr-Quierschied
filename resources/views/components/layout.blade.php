@@ -96,7 +96,7 @@
                     <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Förderverein</a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Kontakt</a>
+                    <a href="{{ route('kontakt.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Kontakt</a>
                 </li>
 
             </ul>
@@ -115,7 +115,7 @@
 
     <div class="flex items-center gap-4">
 
-        <a href="#" class="hover:text-white transition-all">
+        <a href="{{ route('kontakt.index') }}" class="hover:text-white transition-all">
             Kontakt
         </a>
 
