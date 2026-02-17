@@ -47,7 +47,6 @@ class ManageWelcomeIntro extends Page
                     ->maxLength(255)
                     ->placeholder('z.B. Willkommen bei der Freiwilligen Feuerwehr Quierschied'),
 
-
                 \Filament\Forms\Components\Textarea::make('body')
                     ->label('Einführungstext')
                     ->required()
