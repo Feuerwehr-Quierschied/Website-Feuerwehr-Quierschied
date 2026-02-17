@@ -33,6 +33,9 @@ class CalendarController extends Controller
                 'end' => $event->end?->toIso8601String(),
                 'allDay' => $event->all_day,
                 'backgroundColor' => $event->color,
+                'extendedProps' => [
+                    'description' => $event->description,
+                ],
             ]);
 
         return response()->json($events);

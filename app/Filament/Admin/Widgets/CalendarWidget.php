@@ -20,14 +20,19 @@ class CalendarWidget extends FullCalendarWidget
     {
         return [
             Actions\CreateAction::make()
-                ->mountUsing(function ($form, $arguments) {
+                ->mountUsing(function ($form) {
+                    $arguments = $this->getMountedAction()->getArguments();
+                    $fillData = [];
                     if (isset($arguments['start'], $arguments['end'])) {
-                        $form->fill([
-                            'start' => $arguments['start'],
-                            'end' => $arguments['end'],
+                        $start = $arguments['start'];
+                        $end = $arguments['end'];
+                        $fillData = [
+                            'start' => $start instanceof \Carbon\Carbon ? $start->format('Y-m-d H:i:s') : $start,
+                            'end' => $end instanceof \Carbon\Carbon ? $end->format('Y-m-d H:i:s') : $end,
                             'all_day' => $arguments['allDay'] ?? false,
-                        ]);
+                        ];
                     }
+                    $form->fill($fillData);
                 }),
         ];
     }
