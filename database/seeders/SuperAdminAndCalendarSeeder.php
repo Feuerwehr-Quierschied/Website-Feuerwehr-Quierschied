@@ -46,7 +46,6 @@ class SuperAdminAndCalendarSeeder extends Seeder
                 'end' => '2026-02-15 12:00:00',
                 'description' => 'Jährliche Prüfung der Feuerlöscher und Geräte',
                 'all_day' => false,
-                'color' => '#3B82F6',
             ],
             [
                 'title' => 'Jahreshauptversammlung',
@@ -54,7 +53,6 @@ class SuperAdminAndCalendarSeeder extends Seeder
                 'end' => '2026-02-22 22:00:00',
                 'description' => 'Jährliche Hauptversammlung der Feuerwehr',
                 'all_day' => false,
-                'color' => '#10B981',
             ],
         ];
 

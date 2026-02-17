@@ -21,6 +21,48 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 }
+.filament-fullcalendar {
+    --fc-event-bg-color: #FB2C36;
+    --fc-event-border-color: #FB2C36;
+    --fc-event-text-color: #fff;
+}
+
+html.dark .filament-fullcalendar {
+    --fc-event-bg-color: #FB2C36;
+    --fc-event-border-color: #FB2C36;
+    --fc-event-text-color: #fff;
+}
+
+/* Zusätzlich: alle Event-Typen (daygrid + timegrid) explizit stylen */
+.filament-fullcalendar .fc-event,
+.filament-fullcalendar .fc-daygrid-event,
+.filament-fullcalendar .fc-timegrid-event,
+.filament-fullcalendar .fc-h-event,
+.filament-fullcalendar .fc-v-event {
+    background-color: #FB2C36 !important;
+    border-color: #FB2C36 !important;
+    color: #fff !important;
+}
+
+.filament-fullcalendar .fc-event .fc-event-main,
+.filament-fullcalendar .fc-event-main {
+    color: #fff !important;
+}
+
+/* Event-Titel vollständig anzeigen (nicht abschneiden) */
+.filament-fullcalendar .fc-event-title,
+.filament-fullcalendar .fc-event-main .fc-event-title {
+    overflow: visible !important;
+    white-space: normal !important;
+    max-height: none !important;
+    word-wrap: break-word;
+}
+.filament-fullcalendar .fc-event-title-container {
+    min-height: auto !important;
+}
+.filament-fullcalendar .fc-daygrid-event-harness {
+    min-height: 1.5em;
+}
 
 /* Example: custom overrides (optional) */
 /* .fi-sidebar { border-right-width: 2px; } */

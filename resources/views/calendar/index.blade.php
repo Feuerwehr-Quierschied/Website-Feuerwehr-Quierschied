@@ -140,6 +140,43 @@
             --fc-today-bg-color: rgba(251, 44, 54, 0.15);
             --fc-event-bg-color: #FB2C36;
             --fc-event-border-color: #FB2C36;
+            --fc-event-text-color: #fff;
+        }
+        .calendar-public .fc-event,
+        .calendar-public .fc-daygrid-event,
+        .calendar-public .fc-h-event {
+            background-color: #FB2C36 !important;
+            border-color: #FB2C36 !important;
+            color: #fff !important;
+        }
+        .calendar-public .fc-event .fc-event-main,
+        .calendar-public .fc-event-main {
+            color: #fff !important;
+        }
+        /* Event-Titel mit Zeilenumbruch anzeigen (nicht abschneiden) */
+        .calendar-public .fc-event,
+        .calendar-public .fc-daygrid-event,
+        .calendar-public .fc-event-main,
+        .calendar-public .fc-event-main-frame,
+        .calendar-public .fc-event-title-container {
+            overflow: visible !important;
+        }
+        .calendar-public .fc-event-title {
+            overflow: visible !important;
+            white-space: normal !important;
+            max-height: none !important;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+        .calendar-public .fc-event-title-container {
+            min-height: auto !important;
+            flex-shrink: 0 !important;
+        }
+        .calendar-public .fc-event-main-frame {
+            display: block !important;
+        }
+        .calendar-public .fc-daygrid-event-harness {
+            min-height: 1.5em;
         }
         .calendar-public .fc {
             font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
