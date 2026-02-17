@@ -42,6 +42,7 @@ jobs:
             # This will now have permission to copy files into public/
             docker compose exec -T --user 33 app php artisan migrate --force
             docker compose exec -T --user 33 app php artisan filament:upgrade
+            php artisan shield:generate --all --panel=admin --option=policies_and_permissions --no-interaction
             docker compose exec -T --user 33 app php artisan optimize
             
             # 7. Final cleanup
