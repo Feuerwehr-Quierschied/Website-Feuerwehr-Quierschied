@@ -1,0 +1,26 @@
+/**
+ * Admin Panel Theme
+ *
+ * Colors and font are defined in config/filament-theme.php – that is the
+ * single source of truth. Edit that file to change the admin panel theme.
+ *
+ * This file styles the /admin Filament panel and the FullCalendar widget.
+ */
+
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '../../../../vendor/saade/filament-fullcalendar/resources/css/filament-fullcalendar.css';
+
+@source '../../../../vendor/saade/filament-fullcalendar/resources/views/**/*.blade.php';
+@source '../../../../app/Filament/Admin/**/*';
+@source '../../../../resources/views/filament/admin/**/*';
+
+/* Font from config/filament-theme.php (admin.font) */
+@theme {
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+/* Example: custom overrides (optional) */
+/* .fi-sidebar { border-right-width: 2px; } */

@@ -92,6 +92,9 @@
                 <li>
                     <a href="{{ route('einsaetze.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Einsätze</a>
                 </li>
+                <li>
+                    <a href="{{ route('calendar.index') }}" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Kalender</a>
+                </li>
                 <li class="hidden">
                     <a href="#" class="block py-2 px-3 text-def-text hover:text-white md:p-0 transition-colors">Förderverein</a>
                 </li>

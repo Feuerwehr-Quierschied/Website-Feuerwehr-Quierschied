@@ -7,10 +7,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bezhansalleh/filament-shield": "^4.1",
         "filament/filament": "~4.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "saade/filament-fullcalendar": "4.0.0-beta3",
+        "saade/filament-fullcalendar": "v4.0.0-beta3",
         "spatie/laravel-honeypot": "^4.6"
     },
     "require-dev": {

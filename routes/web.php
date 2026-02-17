@@ -21,6 +21,9 @@ Route::post('/kontakt', [KontaktController::class, 'store'])->middleware(Protect
 
 Route::get('/aktuelles', [\App\Http\Controllers\AktuellesController::class, 'index'])->name('aktuelles.index');
 Route::get('/aktuelles/{slug}', [\App\Http\Controllers\AktuellesController::class, 'show'])->name('aktuelles.show');
+
+Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
+Route::get('/calendar/events', [\App\Http\Controllers\CalendarController::class, 'events'])->name('calendar.events');
 Route::get('/deploy-migrate', function () {
     \Artisan::call('migrate --force');
 
