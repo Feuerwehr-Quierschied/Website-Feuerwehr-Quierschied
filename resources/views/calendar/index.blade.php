@@ -12,9 +12,36 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const calendarEl = document.getElementById('calendar');
+            let lastNavClick = 0;
+            const navDebounceMs = 200;
+
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'de',
+                buttonText: {
+                    today: 'Heute',
+                    month: 'Monat',
+                    week: 'Woche',
+                    day: 'Tag'
+                },
+                customButtons: {
+                    prev: {
+                        icon: 'chevron-left',
+                        click: function() {
+                            if (Date.now() - lastNavClick < navDebounceMs) return;
+                            lastNavClick = Date.now();
+                            calendar.prev();
+                        }
+                    },
+                    next: {
+                        icon: 'chevron-right',
+                        click: function() {
+                            if (Date.now() - lastNavClick < navDebounceMs) return;
+                            lastNavClick = Date.now();
+                            calendar.next();
+                        }
+                    }
+                },
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
