@@ -56,7 +56,7 @@
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Geschichte der Feuerwehr</a>
                             </li>
 
-                            <li class="relative abteilungen-group">
+                            <li class="hidden relative abteilungen-group">
                                 <div class="flex items-center justify-between hover:bg-gray-700 hover:text-fire-red w-full md:inline-flex md:justify-start">
                                     <a href="#" class="abteilungen-link block px-4 py-2 md:inline-flex md:items-center">Abteilungen</a>
                                     <button type="button" class="abteilungen-chevron p-2 md:hidden">
@@ -69,7 +69,7 @@
                                     </svg>
                                 </div>
 
-                                <div class="hidden abteilungen-submenu hidden md:group-hover:block md:absolute md:left-full md:top-0 z-20 w-44 mt-0 md:ml-0">
+                                <div class="abteilungen-submenu hidden md:group-hover:block md:absolute md:left-full md:top-0 z-20 w-44 mt-0 md:ml-0">
                                     <ul class=" bg-background-dropdown border-t-2 border-red-700 shadow-xl py-2 text-sm text-def-text">
                                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Jugendwehr</a></li>
                                         <li><a href="#" class="block px-4 py-2 hover:bg-gray-700 hover:text-fire-red">Aktiv</a></li>
