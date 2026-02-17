@@ -34,5 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             WelcomeIntroSeeder::class,
         ]);
+        $this->call([
+            SuperAdminAndCalendarSeeder::class,
+        ]);
     }
 }

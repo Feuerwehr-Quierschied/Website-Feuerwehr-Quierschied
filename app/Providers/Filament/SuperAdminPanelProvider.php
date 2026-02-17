@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -19,28 +18,26 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
-class AdminPanelProvider extends PanelProvider
+class SuperAdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('super-admin')
+            ->path('super-admin')
+            ->login()
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->font(config('filament-theme.admin.font', 'Instrument Sans'))
-            ->login()
             ->colors(config('filament-theme.admin.colors', [
                 'primary' => '#FB2C36',
             ]))
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
+            ->discoverResources(in: app_path('Filament/SuperAdmin/Resources'), for: 'App\Filament\SuperAdmin\Resources')
+            ->discoverPages(in: app_path('Filament/SuperAdmin/Pages'), for: 'App\Filament\SuperAdmin\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\Filament\Admin\Widgets')
+            ->discoverWidgets(in: app_path('Filament/SuperAdmin/Widgets'), for: 'App\Filament\SuperAdmin\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
@@ -56,23 +53,14 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->plugins([
-                FilamentShieldPlugin::make(),
-                FilamentFullCalendarPlugin::make()
-                    ->selectable()
-                    ->editable()
-                    ->timezone(config('app.timezone'))
-                    ->locale(config('app.locale')),
-            ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->userMenuItems([
-                Action::make('user_management')
-                    ->label('Benutzerverwaltung')
-                    ->url(fn (): string => url('/super-admin'))
-                    ->icon('heroicon-o-users')
-                    ->visible(fn (): bool => auth()->user()?->hasRole('super_admin') ?? false),
+                Action::make('admin_panel')
+                    ->label('Admin-Panel')
+                    ->url(fn (): string => url('/admin'))
+                    ->icon('heroicon-o-arrow-left'),
             ]);
     }
 }
