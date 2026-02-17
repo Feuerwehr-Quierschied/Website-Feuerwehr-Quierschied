@@ -1,8 +1,8 @@
 <x-layout>
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold text-fire-red mb-8">Kalender</h1>
+    <div class="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-fire-red mb-6 sm:mb-8">Kalender</h1>
 
-        <div class="relative rounded-xl bg-gray-800 p-6 shadow-lg shadow-red-950/30">
+        <div class="relative rounded-xl bg-gray-800 p-4 sm:p-6 shadow-lg shadow-red-950/30">
             <div id="calendar" class="calendar-public"></div>
         </div>
     </div>
@@ -18,7 +18,7 @@
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: ''
                 },
                 eventSources: [
                     {
@@ -71,6 +71,41 @@
         .calendar-public .fc-toolbar-title {
             color: #fff;
             font-size: 1.5rem;
+        }
+
+        /* Mobile: stack toolbar vertically so all buttons fit */
+        @media (max-width: 640px) {
+            .calendar-public .fc-toolbar.fc-header-toolbar {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: stretch;
+            }
+            .calendar-public .fc-toolbar-chunk {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .calendar-public .fc-toolbar-chunk:first-child {
+                order: 2;
+            }
+            .calendar-public .fc-toolbar-chunk:nth-child(2) {
+                order: 1;
+            }
+            .calendar-public .fc-toolbar-chunk:last-child {
+                order: 3;
+            }
+            .calendar-public .fc-toolbar-title {
+                font-size: 1.25rem;
+            }
+            .calendar-public .fc-button {
+                padding: 0.35rem 0.6rem;
+                font-size: 0.875rem;
+            }
+            .calendar-public .fc-col-header-cell-cushion,
+            .calendar-public .fc-daygrid-day-number {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </x-layout>
