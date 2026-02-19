@@ -58,7 +58,7 @@ html.dark .filament-fullcalendar {
     word-wrap: break-word;
 }
 .filament-fullcalendar .fc-event-title-container {
-    min-height: auto !important;
+    min-hgeight: auto !important;
 }
 .filament-fullcalendar .fc-daygrid-event-harness {
     min-height: 1.5em;
